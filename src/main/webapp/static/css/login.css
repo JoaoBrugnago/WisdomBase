@@ -1,0 +1,113 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+.login-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+}
+
+.login-logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.login-success {
+    padding: 10px 20px;
+    background-color: rgb(215, 255, 218);
+    border: 1px solid rgb(166, 242, 171);
+    margin-bottom: 20px;
+}
+
+.login-error {
+    padding: 10px 20px;
+    background-color: rgb(251, 205, 205);
+    border: 1px solid rgb(248, 144, 145);
+    margin-bottom: 20px;
+}
+
+.login-form {
+    margin-bottom: 20px;
+}
+
+.login-input-group {
+    margin-bottom: 15px;
+    text-align: left;
+    width: 100%;
+}
+
+.login-input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.login-input-group input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.login-btn-submit {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.login-btn-submit:hover {
+    background-color: #0056b3;
+}
+
+.login-cadastro, .login-recuperar {
+    display: block;
+    margin-bottom: 5px;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: #333;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.login-cadastro:hover, .login-recuperar:hover {
+    text-decoration: underline;
+    border: 1px solid rgb(156, 178, 246);
+}
+
+.login-cadastro:focus, .login-recuperar:focus {
+    text-decoration: underline;
+    border: 1px solid rgb(156, 178, 246);
+}

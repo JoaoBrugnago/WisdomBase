@@ -1,0 +1,31 @@
+/* Reset básico para remover estilos padrão dos navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Remove decoração de links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Remove estilos padrão de listas */
+ul, ol {
+    list-style: none;
+}
+
+/* Reseta fontes e melhora a renderização */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.5;
+}
+
+/* Remover bordas em inputs e buttons */
+input, button {
+    border: none;
+    outline: none;
+    font-family: inherit;
+}

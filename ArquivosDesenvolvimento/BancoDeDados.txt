@@ -1,0 +1,36 @@
+create database Wisdombase_desenvolvimento;
+use Wisdombase_desenvolvimento;
+
+CREATE TABLE Usuarios (
+    UsuarioIdSequencia INT AUTO_INCREMENT PRIMARY KEY,
+    UsuarioNome VARCHAR(100) NOT NULL,
+    UsuarioEmail VARCHAR(150) UNIQUE NOT NULL,
+    UsuarioSenha VARCHAR(150) NOT NULL,
+    UsuarioDataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UsuarioStatus ENUM('ATIVO', 'INATIVO') DEFAULT 'ATIVO'
+);
+
+CREATE TABLE Pastas (
+    PastaIdSequencia INT AUTO_INCREMENT PRIMARY KEY,
+    PastaNome VARCHAR(255) NOT NULL,
+    PastaNroPai INT NULL,
+    PastaDataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PastaDataUltimaModificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UsuarioIdSequencia INT,
+    FOREIGN KEY (PastaNroPai) REFERENCES Pastas(PastaIdSequencia),
+    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia)
+);
+
+CREATE TABLE Arquivos (
+    ArquivoIdSequencia INT AUTO_INCREMENT PRIMARY KEY,
+    ArquivoNome VARCHAR(255) NOT NULL,
+    ArquivoTipo VARCHAR(50),
+    ArquivoTamanho BIGINT,
+    ArquivoConteudo longblob,
+    ArquivoCaminho varchar(500),
+    ArquivoDataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PastaIdSequencia INT,
+    UsuarioIdSequencia INT,
+    FOREIGN KEY (PastaIdSequencia) REFERENCES Pastas(PastaIdSequencia),
+    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia)
+);
