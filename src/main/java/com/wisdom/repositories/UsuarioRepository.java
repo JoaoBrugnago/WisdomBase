@@ -50,6 +50,29 @@ public class UsuarioRepository {
         }
     }
 
+    public Usuario recuperarUsuarioViaId(int id) {
+        String read = "select * from Usuarios where UsuarioIdSequencia = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement pst = connection.prepareStatement(read)) {
+
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return new Usuario(
+                            rs.getInt("UsuarioIdSequencia"),
+                            rs.getString("UsuarioNome"),
+                            rs.getString("UsuarioEmail"),
+                            rs.getString("UsuarioSenha"),
+                            Usuario.Status.valueOf(rs.getString("UsuarioStatus"))
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao recuperar usuário.", e);
+        }
+        return null;
+    }
+
     public Usuario recuperarUsuarioViaEmail(String email) {
         String read = "select * from Usuarios where UsuarioEmail = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -84,6 +107,25 @@ public class UsuarioRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao validar email.", e);
+        }
+    }
+
+    public void alterarSenha(int idUsuario, String senha) {
+        String update = "update Usuarios set UsuarioSenha = ? where UsuarioIdSequencia = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement pst = connection.prepareStatement(update)) {
+
+            pst.setString(1, senha);
+            pst.setInt(2, idUsuario);
+
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new RuntimeException("Erro: Nenhuma linha foi atualizada. Verifique se o usuário existe.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao alterar senha do usuário.", e);
         }
     }
 }

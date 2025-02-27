@@ -60,9 +60,14 @@ public class RecuperarSenhaController extends HttpServlet {
         if (!temErro) {
             Usuario usuario = usuarioRepository.recuperarUsuarioViaEmail(email);
             tokenRepository.cadastrarToken(token, "RECUPERARSENHA", usuario.getId());
-            //-- Apenas teste
+            //-- Apenas teste, ver como parametrizar uma mensagem depois
             try {
-                EmailService.enviarEmail("joao.brugnagoo@gmail.com", "Assunto teste", "Corpo do texto, token: " + token);
+                String assunto = "Recuperação de senha";
+                String corpo = "<h1>Prezado(a) " + usuario.getNome() + ",</h1>";
+                corpo += "<p>Segue link para recuperação de senha:</p>";
+                corpo += "<p><a href='http://localhost:8081/WisdomBase/redefinirSenha?token=" + token + "'>Clique aqui para redefinir sua senha</a></p>";
+                corpo += "<p>Se você não solicitou a recuperação de senha, ignore este e-mail.</p>";
+                EmailService.enviarEmail(usuario.getEmail(), assunto, corpo);
             } catch (MessagingException e) {
                 //-- Ver como tratar o retorno..
             }

@@ -32,7 +32,7 @@ public class EmailService {
         message.setFrom(new InternetAddress(USERNAME));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
         message.setSubject(assunto);
-        message.setText(mensagemTexto);
+        message.setContent(mensagemTexto, "text/html; charset=utf-8");
 
         //-- Envia o e-mail
         try {
