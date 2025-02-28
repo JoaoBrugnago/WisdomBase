@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UsuarioRepository {
-    public Usuario recuperarUsuario(String email, String password) {
+    public Usuario recuperarUsuarioViaEmailESenha(String email, String password) {
         String read = "select * from Usuarios where UsuarioEmail = ? and UsuarioSenha = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement pst = connection.prepareStatement(read)) {
@@ -110,7 +110,7 @@ public class UsuarioRepository {
         }
     }
 
-    public void alterarSenha(int idUsuario, String senha) {
+    public void alterarSenhaViaId(int idUsuario, String senha) {
         String update = "update Usuarios set UsuarioSenha = ? where UsuarioIdSequencia = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();

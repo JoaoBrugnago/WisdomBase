@@ -66,18 +66,18 @@ public class RedefinirSenhaController extends HttpServlet {
             }
         }
         if (!temErro) {
-            Token tokenModel = tokenRepository.retornarToken(token);
+            Token tokenModel = tokenRepository.recuperarToken(token);
             Usuario usuario = tokenModel.getUsuario();
-            usuarioRepository.alterarSenha(usuario.getId(), senha);
-            message = "Processo executado com sucesso.";
-        }
-
-        request.setAttribute("message", message);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/redefinirSenha.jsp");
-        try {
-            dispatcher.forward(request, response);
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao redirecionar a página.", e);
+            usuarioRepository.alterarSenhaViaId(usuario.getId(), senha);
+            response.sendRedirect("redefinirSenha.jsp?cadastroSucesso=true");
+        } else {
+            request.setAttribute("message", message);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/redefinirSenha.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao redirecionar a página.", e);
+            }
         }
     }
 }

@@ -31,6 +31,13 @@ body {
     color: #333;
 }
 
+.redefinirSenha-success {
+    padding: 10px 20px;
+    background-color: rgb(215, 255, 218);
+    border: 1px solid rgb(166, 242, 171);
+    margin-bottom: 20px;
+}
+
 .redefinirSenha-message {
     padding: 10px 20px;
     background-color: rgb(251, 205, 205);

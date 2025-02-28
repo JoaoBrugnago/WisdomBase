@@ -36,7 +36,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        Usuario usuario = usuarioRepository.recuperarUsuario(email, senha);
+        Usuario usuario = usuarioRepository.recuperarUsuarioViaEmailESenha(email, senha);
 
         if (usuario != null) {
             request.getSession().setAttribute("usuarioLogado", usuario);

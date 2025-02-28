@@ -23,6 +23,10 @@
                 <img src="static/img/wisdom.png" alt="WisdomBase Logo" class="redefinirSenha-logo">
                 <h1>Redefinir senha.</h1>
 
+                <% if (request.getParameter("cadastroSucesso") != null) { %>
+                <p class="redefinirSenha-success">Procedimento realizado com sucesso!</p>
+                <% } %>
+
                 <% if (request.getAttribute("message") != null) { %>
                 <p class="redefinirSenha-message"><%= request.getAttribute("message") %></p>
                 <% } %>

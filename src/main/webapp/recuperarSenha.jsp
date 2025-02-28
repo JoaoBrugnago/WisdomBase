@@ -23,6 +23,10 @@
                 <img src="static/img/wisdom.png" alt="WisdomBase Logo" class="recuperarSenha-logo">
                 <h1>Recuperar senha</h1>
 
+                <% if (request.getParameter("cadastroSucesso") != null) { %>
+                <p class="recuperarSenha-success">Procedimento executado, verifique seu e-mail!</p>
+                <% } %>
+
                 <% if (request.getAttribute("errorMessage") != null) { %>
                 <p class="recuperarSenha-error"><%= request.getAttribute("errorMessage") %></p>
                 <% } %>

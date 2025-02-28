@@ -32,7 +32,7 @@ public class TokenRepository {
         }
     }
 
-    public Token retornarToken(String token) {
+    public Token recuperarToken(String token) {
         String read = "select * from Tokens where TokenConteudo = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -83,11 +83,11 @@ public class TokenRepository {
                     Instant agora = Instant.now();
                     long horasDeDiferenca = Duration.between(dataCriacao.toInstant(), agora).toHours();
                     if (horasDeDiferenca > 24) {
-                        return false; // Token expirado
+                        return false;
                     }
-                    return true; // Token válido
+                    return true;
                 } else {
-                    return false; // Token não encontrado
+                    return false; //-- Token não encontrado
                 }
             }
         } catch (SQLException e) {

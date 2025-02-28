@@ -68,8 +68,11 @@ public class RecuperarSenhaController extends HttpServlet {
                 corpo += "<p><a href='http://localhost:8081/WisdomBase/redefinirSenha?token=" + token + "'>Clique aqui para redefinir sua senha</a></p>";
                 corpo += "<p>Se você não solicitou a recuperação de senha, ignore este e-mail.</p>";
                 EmailService.enviarEmail(usuario.getEmail(), assunto, corpo);
+                response.sendRedirect("recuperarSenha.jsp?cadastroSucesso=true");
             } catch (MessagingException e) {
                 //-- Ver como tratar o retorno..
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao redirecionar a página.", e);
             }
         } else {
             request.setAttribute("errorMessage", mensagem);
