@@ -10,15 +10,25 @@ CREATE TABLE Usuarios (
     UsuarioStatus ENUM('ATIVO', 'INATIVO') DEFAULT 'ATIVO'
 );
 
+CREATE TABLE Tokens (
+    TokenConteudo VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY,
+    TokenTipoChave VARCHAR(50) NOT NULL,
+    UsuarioIdSequencia INT NOT NULL,
+    TokenDataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia)
+);
+
 CREATE TABLE Pastas (
     PastaIdSequencia INT AUTO_INCREMENT PRIMARY KEY,
     PastaNome VARCHAR(255) NOT NULL,
+    PastaStatus ENUM('ATIVA', 'INATIVA') NOT NULL DEFAULT 'ATIVA',
     PastaNroPai INT NULL,
     PastaDataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PastaDataUltimaModificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PastaDataUltimaModificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UsuarioIdSequencia INT,
     FOREIGN KEY (PastaNroPai) REFERENCES Pastas(PastaIdSequencia),
-    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia)
+    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia),
+    UNIQUE INDEX (PastaNome, PastaNroPai) -- Impede nomes duplicados dentro da mesma pasta
 );
 
 CREATE TABLE Arquivos (
@@ -33,4 +43,35 @@ CREATE TABLE Arquivos (
     UsuarioIdSequencia INT,
     FOREIGN KEY (PastaIdSequencia) REFERENCES Pastas(PastaIdSequencia),
     FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia)
+);
+
+CREATE TABLE Grupos (
+    GrupoId INT AUTO_INCREMENT PRIMARY KEY,
+    GrupoNome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE UsuarioGrupo (
+    UsuarioIdSequencia INT,
+    GrupoId INT,
+    PRIMARY KEY (UsuarioIdSequencia, GrupoId),
+    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia),
+    FOREIGN KEY (GrupoId) REFERENCES Grupos(GrupoId)
+);
+
+CREATE TABLE PermissoesGrupoPasta (
+    GrupoId INT,
+    PastaIdSequencia INT,
+    Permissao ENUM('NONE', 'LER', 'ESCREVER', 'EXCLUIR') NOT NULL DEFAULT 'NONE',
+    PRIMARY KEY (GrupoId, PastaIdSequencia),
+    FOREIGN KEY (GrupoId) REFERENCES Grupos(GrupoId),
+    FOREIGN KEY (PastaIdSequencia) REFERENCES Pastas(PastaIdSequencia)
+);
+
+CREATE TABLE PermissoesUsuarioPasta (
+    UsuarioIdSequencia INT,
+    PastaIdSequencia INT,
+    Permissao ENUM('NONE', 'LER', 'ESCREVER', 'EXCLUIR') NOT NULL DEFAULT 'NONE',
+    PRIMARY KEY (UsuarioIdSequencia, PastaIdSequencia),
+    FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia),
+    FOREIGN KEY (PastaIdSequencia) REFERENCES Pastas(PastaIdSequencia)
 );
