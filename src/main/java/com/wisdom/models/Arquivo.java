@@ -10,22 +10,22 @@ public class Arquivo {
     private long tamanho;  // Tamanho do arquivo em bytes
     private byte[] conteudo;  // Conteúdo do arquivo em binário (BLOB)
     private String caminho;
-    private int pastaId;
     private Timestamp dataCriacao;
+    private int pastaId;
     private int usuarioId;
 
     public Arquivo() {
     }
 
-    public Arquivo(int id, String nome, String tipo, long tamanho, byte[] conteudo, String caminho, int pastaId, Timestamp dataCriacao, int usuarioId) {
+    public Arquivo(int id, String nome, String tipo, long tamanho, byte[] conteudo, String caminho, Timestamp dataCriacao, int pastaId, int usuarioId) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;
         this.tamanho = tamanho;
         this.conteudo = conteudo;
         this.caminho = caminho;
-        this.pastaId = pastaId;
         this.dataCriacao = dataCriacao;
+        this.pastaId = pastaId;
         this.usuarioId = usuarioId;
     }
 
