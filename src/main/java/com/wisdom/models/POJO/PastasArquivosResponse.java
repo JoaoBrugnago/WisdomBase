@@ -9,15 +9,17 @@ public class PastasArquivosResponse {
     private int id;
     private String tipo;
     private String nome;
+    private boolean carregado;
     private List<PastaResponse> subpastas;
     private List<ArquivoResponse> arquivos;
 
     public PastasArquivosResponse() {}
 
-    public PastasArquivosResponse(int id, String tipo, String nome, List<PastaResponse> subpastas, List<ArquivoResponse> arquivos) {
+    public PastasArquivosResponse(int id, String tipo, String nome, boolean carregado, List<PastaResponse> subpastas, List<ArquivoResponse> arquivos) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
+        this.carregado = carregado;
         this.subpastas = subpastas;
         this.arquivos = arquivos;
     }

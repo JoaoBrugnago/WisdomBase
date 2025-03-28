@@ -48,6 +48,22 @@
                 </nav>
             </header>
 
+            <div class="home-container">
+                <aside class="home-sidebar">
+
+                </aside>
+
+                <main class="home-content">
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Pesquisar arquivos ou pastas...">
+                    </div>
+
+                    <div id="content">
+
+                    </div>
+                </main>
+            </div>
+
             <script src="static/js/home.js"></script>
         </body>
     </html>

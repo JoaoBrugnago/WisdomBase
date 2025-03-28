@@ -59,6 +59,7 @@ public class MontaPastasArquivosController extends HttpServlet {
                             pasta.getId(),
                             "pasta",
                             pasta.getNome(),
+                            false,
                             pastaResponses,
                             arquivoResponses
                     );
