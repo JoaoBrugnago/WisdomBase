@@ -14,9 +14,9 @@ function atualizarEstruturaCompleta(estruturaCompleta, estruturaRetornoBackEnd) 
   function encontrarEAtualizarPasta(estruturaCompleta, estruturaRetornoBackEnd) {
     // Se encontramos a pasta, atualizamos os dados
     if (estruturaCompleta.id === estruturaRetornoBackEnd.id && estruturaCompleta.tipo === estruturaRetornoBackEnd.tipo) {
-      estruturaCompleta.subpastas = Array.isArray(estruturaRetornoBackEnd.subpastas) ? estruturaRetornoBackEnd.subpastas : [];
-      estruturaCompleta.arquivos = Array.isArray(estruturaRetornoBackEnd.arquivos) ? estruturaRetornoBackEnd.arquivos : [];
-      estruturaCompleta.carregado = true;
+      estruturaCompleta.subpastas = Array.isArray(estruturaRetornoBackEnd.subpastas) ? estruturaRetornoBackEnd.subpastas : []; //-- estruturaRetornoBackEnd.subpastas;
+      estruturaCompleta.arquivos = Array.isArray(estruturaRetornoBackEnd.arquivos) ? estruturaRetornoBackEnd.arquivos : []; //-- estruturaRetornoBackEnd.arquivos;
+      estruturaCompleta.carregado = true; 
       return true;
     }
 
@@ -119,9 +119,11 @@ function atualizarInterface(estruturaCompleta) {
 
 // Função para fazer o fetch ao clicar em uma pasta
 function fetchPastasArquivos(id, tipo) {
-  fetch(`/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
+  fetch(`http://localhost:8081/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
     .then(response => response.json())
     .then(data => {
+      // Atualiza a estrutura com os dados recebidos
+      console.log("Dados da pasta recebidos:", data);
       atualizarEstruturaCompleta(estruturaCompleta, data);
     })
     .catch(error => {
@@ -133,3 +135,65 @@ window.onload = function() {
   // Renderiza a árvore inicial
   atualizarEstruturaCompleta(estruturaCompleta, estruturaCompleta);
 };
+
+
+
+/*
+  // Simulando a resposta do backend para a pasta root
+  let respostaBackendRoot = {
+    "id": 1,
+    "tipo": "pasta",
+    "nome": "root",
+    "carregado": false,
+    "subpastas": [
+      {"id": 2, "tipo": "pasta", "nome": "Contratos", "carregado": false, "subpastas": [], "arquivos": []},
+      {"id": 6, "tipo": "pasta", "nome": "Projetos", "carregado": false, "subpastas": [], "arquivos": []}
+    ],
+    "arquivos":[
+      {"id": 4, "tipo": "arquivo", "nome": "SenhasImportantes"},
+      {"id": 5, "tipo": "arquivo", "nome": "PostmanEmJava"}
+    ]
+  };
+
+  // Renderiza a árvore inicial
+  atualizarEstruturaCompleta(estruturaCompleta, respostaBackendRoot);
+  console.log("Após atualizar 'root':", JSON.stringify(estruturaCompleta, null, 2));
+
+  // Simulando a resposta do backend para a pasta "Contratos"
+  let respostaBackendContratos = {
+    "id": 2,
+    "tipo": "pasta",
+    "nome": "Contratos",
+    "carregado": false,
+    "subpastas": [
+      {"id": 23, "tipo": "pasta", "nome": "Financeiro", "carregado": false, "subpastas": [], "arquivos": []},
+      {"id": 44, "tipo": "pasta", "nome": "Comercio", "carregado": false, "subpastas": [], "arquivos": []}
+    ],
+    "arquivos":[
+      {"id": 33, "tipo": "arquivo", "nome": "Gmails cadastrados"}
+    ]
+  };
+
+  // Atualiza a pasta "Contratos" e suas subpastas
+  atualizarEstruturaCompleta(estruturaCompleta, respostaBackendContratos);
+  console.log("Após atualizar 'Contratos':", JSON.stringify(estruturaCompleta, null, 2));
+
+  // Simulando a resposta do backend para a pasta "Comercio"
+  let respostaBackendComercio = {
+    "id": 44,
+    "tipo": "pasta",
+    "nome": "Comercio",
+    "carregado": false,
+    "subpastas": [
+      {"id": 29, "tipo": "pasta", "nome": "Hoje", "carregado": false, "subpastas": [], "arquivos": []},
+      {"id": 37, "tipo": "pasta", "nome": "Amanha", "carregado": false, "subpastas": [], "arquivos": []}
+    ],
+    "arquivos":[
+      {"id": 70, "tipo": "arquivo", "nome": "Qualquer coisa"}
+    ]
+  };
+
+  // Atualiza a pasta "Contratos" e suas subpastas
+  atualizarEstruturaCompleta(estruturaCompleta, respostaBackendComercio);
+  console.log("Após atualizar 'Comercio':", JSON.stringify(estruturaCompleta, null, 2));
+  */

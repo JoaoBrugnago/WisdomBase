@@ -42,7 +42,8 @@ public class MontaPastasArquivosController extends HttpServlet {
                             .map(p -> new PastaResponse(
                                     p.getId(),
                                     "pasta",
-                                    p.getNome()
+                                    p.getNome(),
+                                    false
                             ))
                             .collect(Collectors.toList());
 
@@ -59,10 +60,15 @@ public class MontaPastasArquivosController extends HttpServlet {
                             pasta.getId(),
                             "pasta",
                             pasta.getNome(),
-                            false,
+                            true,
                             pastaResponses,
                             arquivoResponses
                     );
+
+                    // Estava com problema de cors no front end de teste com o vs code
+                    response.setHeader("Access-Control-Allow-Origin", "*");
+                    response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                    response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
                     // Retornar a resposta no formato JSON
                     response.setContentType("application/json");

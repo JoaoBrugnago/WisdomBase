@@ -49,20 +49,22 @@
             </header>
 
             <div class="home-container">
+                <!-- Sidebar fixa (esquerda) -->
                 <aside class="home-sidebar">
-
+                  <!-- A estrutura de árvore das pastas e arquivos serão carregados aqui -->
                 </aside>
 
+                <!-- Conteúdo dinâmico (direita) -->
                 <main class="home-content">
-                    <div class="search-container">
-                        <input type="text" id="search-input" placeholder="Pesquisar arquivos ou pastas...">
-                    </div>
+                  <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Pesquisar arquivos ou pastas...">
+                  </div>
 
-                    <div id="content">
-
-                    </div>
+                  <div id="content">
+                    <!-- Aqui será carregado o conteúdo de outros .jsp -->
+                  </div>
                 </main>
-            </div>
+              </div>
 
             <script src="static/js/home.js"></script>
         </body>

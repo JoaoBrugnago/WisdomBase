@@ -48,6 +48,14 @@ public class PastasArquivosResponse {
         this.nome = nome;
     }
 
+    public boolean isCarregado() {
+        return carregado;
+    }
+
+    public void setCarregado(boolean carregado) {
+        this.carregado = carregado;
+    }
+
     public List<PastaResponse> getSubpastas() {
         return subpastas;
     }

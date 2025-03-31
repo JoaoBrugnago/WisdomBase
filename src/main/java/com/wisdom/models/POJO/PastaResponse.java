@@ -4,11 +4,13 @@ public class PastaResponse {
     private int id;
     private String tipo;
     private String nome;
+    private boolean carregado;
 
-    public PastaResponse(int id, String tipo, String nome) {
+    public PastaResponse(int id, String tipo, String nome, boolean carregado) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
+        this.carregado = carregado;
     }
 
     public int getId() {
@@ -33,5 +35,13 @@ public class PastaResponse {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isCarregado() {
+        return carregado;
+    }
+
+    public void setCarregado(boolean carregado) {
+        this.carregado = carregado;
     }
 }

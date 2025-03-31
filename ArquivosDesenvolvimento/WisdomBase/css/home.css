@@ -62,18 +62,18 @@
 }
 
 .home-dropdown li:hover {
-  background-color: #ecf0f1;
+  background-color: #ecf0f1; /* Um cinza claro para destacar */
 }
 
 .home-dropdown a {
   text-decoration: none;
-  color: #2c3e50;
+  color: #2c3e50; /* Cor principal do menu */
   font-size: 0.9rem;
-  display: block;
+  display: block; /* Faz o link ocupar toda a largura do `li` */
 }
 
 .home-dropdown a:hover {
-  color: #1abc9c;
+  color: #1abc9c; /* Um verde bonito para destacar */
 }
 
 /* Segunda parte */
