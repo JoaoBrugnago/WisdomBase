@@ -87,10 +87,35 @@
   padding-left: 10px !important;
 }
 
-.folder-name, .file {
+.folder-name {
   cursor: pointer;
+  color: #2c3e50;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.folder-name:hover {
+  color: #1abc9c;
+}
+
+.file {
+  cursor: pointer;
+  color: #2C3E50;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+.file:hover {
+  color: #224c91;
 }
 
 ul > li {
   padding-left: 20px;
+}
+
+.arrow {
+  font-size: 14px;
+  color: #7f8c8d;
+  cursor: pointer;
+  margin-right: 5px;
 }

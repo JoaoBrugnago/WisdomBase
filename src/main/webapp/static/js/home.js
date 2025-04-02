@@ -8,118 +8,131 @@ let estruturaCompleta = {
   "arquivos": []
 };
 
-//-- Função apenas para atualizar a estrutura completa conforme o recebimento do fetch quando o usuário clica em uma pasta
-function atualizarEstruturaCompleta(estruturaCompleta, estruturaRetornoBackEnd) {
+let estruturaCarregamentoInicial = {
+  "id": 9999,
+  "tipo": "testes de sistema"
+};
 
-  function encontrarEAtualizarPasta(estruturaCompleta, estruturaRetornoBackEnd) {
-    // Se encontramos a pasta, atualizamos os dados
-    if (estruturaCompleta.id === estruturaRetornoBackEnd.id && estruturaCompleta.tipo === estruturaRetornoBackEnd.tipo) {
-      estruturaCompleta.subpastas = Array.isArray(estruturaRetornoBackEnd.subpastas) ? estruturaRetornoBackEnd.subpastas : [];
-      estruturaCompleta.arquivos = Array.isArray(estruturaRetornoBackEnd.arquivos) ? estruturaRetornoBackEnd.arquivos : [];
-      estruturaCompleta.carregado = true;
-      return true;
-    }
-
-    // Caso contrário, verificamos as subpastas
-    if (Array.isArray(estruturaCompleta.subpastas)) {
-      for (let subpasta of estruturaCompleta.subpastas) {
-        // Chamada recursiva para verificar subpastas
-        if (encontrarEAtualizarPasta(subpasta, estruturaRetornoBackEnd)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+function encontrarEAtualizarPasta(estruturaCompleta, estruturaRetornoBackEnd) {
+  if (estruturaCompleta.id === estruturaRetornoBackEnd.id && estruturaCompleta.tipo === estruturaRetornoBackEnd.tipo) {
+    estruturaCompleta.subpastas = Array.isArray(estruturaRetornoBackEnd.subpastas) ? estruturaRetornoBackEnd.subpastas : [];
+    estruturaCompleta.arquivos = Array.isArray(estruturaRetornoBackEnd.arquivos) ? estruturaRetornoBackEnd.arquivos : [];
+    estruturaCompleta.carregado = !estruturaCompleta.carregado;
+    return true;
   }
 
-  // Chama a função recursiva para buscar e atualizar a estrutura completa, depois atualiza a interface com esta estrutura
-  encontrarEAtualizarPasta(estruturaCompleta, estruturaRetornoBackEnd);
-  atualizarInterface(estruturaCompleta);
+  if (Array.isArray(estruturaCompleta.subpastas)) {
+    for (let subpasta of estruturaCompleta.subpastas) {
+      if (encontrarEAtualizarPasta(subpasta, estruturaRetornoBackEnd)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function encontrarEFecharPasta(estrutura, id) {
+  if (estrutura.id === id) {
+    estrutura.carregado = false;
+    estrutura.subpastas = [];
+    estrutura.arquivos = [];
+    return true;
+  }
+
+  if (Array.isArray(estrutura.subpastas)) {
+    for (let subpasta of estrutura.subpastas) {
+      if (encontrarEFecharPasta(subpasta, id)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function criarElemento(tag, classes = [], atributos = {}, conteudo = "") {
+  const elemento = document.createElement(tag);
+  classes.forEach(cls => elemento.classList.add(cls));
+  Object.keys(atributos).forEach(attr => elemento.setAttribute(attr, atributos[attr]));
+  if (conteudo) elemento.innerHTML = conteudo;
+  return elemento;
+}
+
+function criarItem(nome, id, carregado, onClickHandler) {
+  const li = criarElemento("li", ["folder"], { "data-id": id });
+  const arrow = criarElemento("span", ["arrow"], {}, carregado ? "⏶" : "⏷");
+  const span = criarElemento("span", ["folder-name"], {}, nome);
+
+  span.onclick = onClickHandler;
+  arrow.onclick = onClickHandler;
+
+  li.appendChild(arrow);
+  li.appendChild(span);
+
+  return li;
 }
 
 function renderizarArvore(estrutura) {
-  const ul = document.createElement("ul");
+  const ul = criarElemento("ul");
 
   if (estrutura.id === 1) {
-    const liRoot = document.createElement("li");
-    liRoot.classList.add("folder", "root-folder");
-    liRoot.setAttribute("data-id", estrutura.id);
-
-    const spanRoot = document.createElement("span");
-    spanRoot.classList.add("folder-name");
-    spanRoot.textContent = estrutura.nome;
-
-    spanRoot.onclick = function () {
-      if (estrutura.carregado) {
-        fetchPastasArquivos(estrutura.id, estrutura.tipo); // Carrega os dados da pasta root
+    const rootItem = criarItem(estrutura.nome, estrutura.id, estrutura.carregado, function () {
+      if (!estrutura.carregado) {
+        fetchPastasArquivos(estrutura.id, estrutura.tipo);
       } else {
-        /*
-        const novaEstrutura = estrutura;
-        novaEstrutura.subpastas = [];
-        novaEstrutura.arquivos = [];
-        atualizarEstruturaCompleta(estrutura, novaEstrutura);
-        */
+        encontrarEFecharPasta(estruturaCompleta, estrutura.id);
+        atualizarInterface(estruturaCompleta);
       }
-    };
-
-    liRoot.appendChild(spanRoot);
-
-    ul.appendChild(liRoot);
+    });
+    ul.appendChild(rootItem);
   }
 
-  // Renderiza subpastas
-  if (estrutura.subpastas && estrutura.subpastas.length > 0) {
+  if (estrutura.subpastas?.length) {
     estrutura.subpastas.forEach(subpasta => {
-      const li = document.createElement("li");
-      li.classList.add("folder");
-      li.setAttribute("data-id", subpasta.id);
-
-      const span = document.createElement("span");
-      span.classList.add("folder-name");
-      span.textContent = subpasta.nome;
-
-      span.onclick = function () {
+      const subItem = criarItem(subpasta.nome, subpasta.id, subpasta.carregado, function () {
         if (!subpasta.carregado) {
           fetchPastasArquivos(subpasta.id, subpasta.tipo);
+        } else {
+          encontrarEFecharPasta(estruturaCompleta, subpasta.id);
+          atualizarInterface(estruturaCompleta);
         }
-      };
-
-      li.appendChild(span);
+      });
 
       if (subpasta.carregado) {
-        li.appendChild(renderizarArvore(subpasta));
+        subItem.appendChild(renderizarArvore(subpasta));
       }
 
-      ul.appendChild(li);
+      ul.appendChild(subItem);
     });
   }
 
-  // Renderiza arquivos
-  if (estrutura.arquivos && estrutura.arquivos.length > 0) {
+  if (estrutura.arquivos?.length) {
     estrutura.arquivos.forEach(arquivo => {
-      const li = document.createElement("li");
-      li.classList.add("file");
-      li.textContent = arquivo.nome;
-      ul.appendChild(li);
+      const fileItem = criarElemento("li", ["file"], {}, arquivo.nome);
+      ul.appendChild(fileItem);
     });
   }
 
   return ul;
 }
 
-// Função para atualizar a árvore de pastas na interface
 function atualizarInterface(estruturaCompleta) {
   const sidebar = document.querySelector(".home-sidebar");
   sidebar.innerHTML = "";  // Limpa a árvore antes de renderizar
 
   const tree = renderizarArvore(estruturaCompleta);
+  sessionStorage.setItem("estruturaCompleta", JSON.stringify(estruturaCompleta));
   sidebar.appendChild(tree);
 }
 
-// Função para fazer o fetch ao clicar em uma pasta
+function atualizarEstruturaCompleta(estruturaCompleta, estruturaRetornoBackEnd) {
+  encontrarEAtualizarPasta(estruturaCompleta, estruturaRetornoBackEnd);
+  atualizarInterface(estruturaCompleta);
+}
+
 function fetchPastasArquivos(id, tipo) {
-  fetch(`/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
+  fetch(`http://localhost:8081/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
     .then(response => response.json())
     .then(data => {
       atualizarEstruturaCompleta(estruturaCompleta, data);
@@ -130,6 +143,11 @@ function fetchPastasArquivos(id, tipo) {
 }
 
 window.onload = function() {
-  // Renderiza a árvore inicial
-  atualizarEstruturaCompleta(estruturaCompleta, estruturaCompleta);
+  const estruturaSalva = sessionStorage.getItem("estruturaCompleta");
+  if (estruturaSalva) {
+    estruturaCompleta = JSON.parse(estruturaSalva);
+    atualizarInterface(estruturaCompleta);
+  } else {
+    atualizarEstruturaCompleta(estruturaCompleta, estruturaCarregamentoInicial);
+  }
 };
