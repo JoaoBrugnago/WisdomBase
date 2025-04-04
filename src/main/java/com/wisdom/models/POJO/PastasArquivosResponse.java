@@ -12,16 +12,18 @@ public class PastasArquivosResponse {
     private boolean carregado;
     private List<PastaResponse> subpastas;
     private List<ArquivoResponse> arquivos;
+    private List<String> caminho;
 
     public PastasArquivosResponse() {}
 
-    public PastasArquivosResponse(int id, String tipo, String nome, boolean carregado, List<PastaResponse> subpastas, List<ArquivoResponse> arquivos) {
+    public PastasArquivosResponse(int id, String tipo, String nome, boolean carregado, List<PastaResponse> subpastas, List<ArquivoResponse> arquivos, List<String> caminho) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
         this.carregado = carregado;
         this.subpastas = subpastas;
         this.arquivos = arquivos;
+        this.caminho = caminho;
     }
 
     public int getId() {
@@ -70,5 +72,13 @@ public class PastasArquivosResponse {
 
     public void setArquivos(List<ArquivoResponse> arquivos) {
         this.arquivos = arquivos;
+    }
+
+    public List<String> getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(List<String> caminho) {
+        this.caminho = caminho;
     }
 }

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PastaRepository {
@@ -107,6 +108,20 @@ public class PastaRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao renomear pasta.", e);
         }
+    }
+
+    public List<String> recuperarCaminhoPaisViaId(int id) {
+        List<String> caminho = new ArrayList<>();
+        Pasta pasta = recuperarPastaViaId(id);
+
+        while (pasta.getIdPai() != null) {
+            caminho.add(pasta.getNome());
+            pasta = (pasta.getIdPai() != null) ? recuperarPastaViaId(pasta.getIdPai()) : null;
+        }
+
+        caminho.add("Root");
+        Collections.reverse(caminho);
+        return caminho;
     }
 
     private Pasta mapResultSetToPasta(ResultSet rs) throws SQLException {

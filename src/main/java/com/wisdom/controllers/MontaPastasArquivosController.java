@@ -35,6 +35,7 @@ public class MontaPastasArquivosController extends HttpServlet {
                     // Recuperando subpastas e arquivos
                     List<Pasta> pastasFilhas = pastaRepository.recuperarPastasFilhasViaIdPai(id);
                     List<Arquivo> arquivos = arquivoRepository.recuperarArquivosViaIdPasta(id);
+                    List<String> caminho = pastaRepository.recuperarCaminhoPaisViaId(id);
 
                     // Mapeando as pastas e arquivos para suas respectivas respostas simplificadas
                     List<PastaResponse> pastaResponses = pastasFilhas
@@ -62,7 +63,8 @@ public class MontaPastasArquivosController extends HttpServlet {
                             pasta.getNome(),
                             true,
                             pastaResponses,
-                            arquivoResponses
+                            arquivoResponses,
+                            caminho
                     );
 
                     // Estava com problema de cors no front end de teste com o vs code

@@ -4,6 +4,7 @@ let estruturaCompleta = {
   "tipo": "pasta",
   "nome": "Root",
   "carregado": false,
+  "caminho": [],
   "subpastas": [],
   "arquivos": []
 };
@@ -109,7 +110,7 @@ function renderizarArvore(estrutura) {
 
   if (estrutura.arquivos?.length) {
     estrutura.arquivos.forEach(arquivo => {
-      const fileItem = criarElemento("li", ["file"], {}, arquivo.nome);
+      const fileItem = criarElemento("li", ["file"], {}, `📄 ${arquivo.nome}`);
       ul.appendChild(fileItem);
     });
   }
@@ -131,11 +132,32 @@ function atualizarEstruturaCompleta(estruturaCompleta, estruturaRetornoBackEnd) 
   atualizarInterface(estruturaCompleta);
 }
 
+function atualizarBreadcrumb(estruturaRetornoBackEnd) {
+  const breadcrumb = document.querySelector('.breadcrumb-container');
+  breadcrumb.innerHTML = "";
+
+  const array = estruturaRetornoBackEnd.caminho;
+  
+  if (Array.isArray(array)) {
+    array.forEach((item, index) => {
+      const span = criarElemento("span", ["breadcrumb-text"], {}, item);
+      breadcrumb.appendChild(span);
+  
+      if (index < array.length - 1) {
+        const separador = criarElemento("span", ["breadcrumb-separator"], {}, "  >  ");
+        breadcrumb.appendChild(separador);
+      }
+    });
+  }
+}
+
 function fetchPastasArquivos(id, tipo) {
   fetch(`http://localhost:8081/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
     .then(response => response.json())
     .then(data => {
       atualizarEstruturaCompleta(estruturaCompleta, data);
+      ajustarAlturaSidebar();
+      atualizarBreadcrumb(data);
     })
     .catch(error => {
       console.error("Erro ao carregar pastas e arquivos:", error);
