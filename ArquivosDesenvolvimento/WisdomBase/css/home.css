@@ -94,7 +94,9 @@
 /* Segunda parte */
 .breadcrumb-container {
   margin: 10px;
+  height: 20px;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .breadcrumb-text {

@@ -137,6 +137,7 @@ function atualizarBreadcrumb(estruturaRetornoBackEnd) {
   breadcrumb.innerHTML = "";
 
   const array = estruturaRetornoBackEnd.caminho;
+  sessionStorage.setItem("caminhoCompleto", JSON.stringify(estruturaRetornoBackEnd));
   
   if (Array.isArray(array)) {
     array.forEach((item, index) => {
@@ -172,6 +173,9 @@ window.onload = function() {
   } else {
     atualizarEstruturaCompleta(estruturaCompleta, estruturaCarregamentoInicial);
   }
+
+  const caminhoSalvo = sessionStorage.getItem("caminhoCompleto");
+  atualizarBreadcrumb(JSON.parse(caminhoSalvo));
 };
 
 
