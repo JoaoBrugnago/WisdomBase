@@ -3,7 +3,6 @@ package com.wisdom.repositories;
 import com.wisdom.models.Pasta;
 import com.wisdom.utils.DatabaseConnection;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

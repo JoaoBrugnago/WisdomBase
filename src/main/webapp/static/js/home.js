@@ -153,7 +153,7 @@ function atualizarBreadcrumb(estruturaRetornoBackEnd) {
 }
 
 function fetchPastasArquivos(id, tipo) {
-  fetch(`http://localhost:8081/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
+  fetch(`/WisdomBase/montapastasarquivos?id=${id}&tipo=${tipo}`)
     .then(response => response.json())
     .then(data => {
       console.log('Dados retornados: ' + JSON.stringify(data));

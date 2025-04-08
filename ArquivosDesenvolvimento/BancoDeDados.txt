@@ -75,3 +75,61 @@ CREATE TABLE PermissoesUsuarioPasta (
     FOREIGN KEY (UsuarioIdSequencia) REFERENCES Usuarios(UsuarioIdSequencia),
     FOREIGN KEY (PastaIdSequencia) REFERENCES Pastas(PastaIdSequencia)
 );
+
+
+
+
+
+/* TESTES DE SISTEMA */
+
+-- Inserindo Pastas
+INSERT INTO Pastas (PastaNome, PastaStatus, PastaNroPai, UsuarioIdSequencia) VALUES
+('Root', 'ATIVA', NULL, 1),  -- Pasta raiz
+('Contratos', 'ATIVA', 1, 1),  -- Subpasta de Root
+('Projetos', 'ATIVA', 1, 1),  -- Subpasta de Root
+('Financeiro', 'ATIVA', 1, 1),  -- Subpasta de Root
+('RH', 'ATIVA', 1, 1),  -- Subpasta de Root
+('Ideias', 'ATIVA', 2, 1),  -- Subpasta de Contratos
+('Pessoas', 'ATIVA', 2, 1),  -- Subpasta de Contratos
+('Documentos', 'INATIVA', 3, 1),  -- Subpasta de Projetos
+('Documentação', 'ATIVA', 3, 1),  -- Subpasta de Projetos
+('Imagens', 'ATIVA', 3, 1),  -- Subpasta de Projetos
+('Impostos', 'ATIVA', 4, 1),  -- Subpasta de Financeiro
+('Orçamento', 'ATIVA', 4, 1),  -- Subpasta de Financeiro
+('Salarios', 'ATIVA', 5, 1),  -- Subpasta de RH
+('Beneficios', 'ATIVA', 5, 1),  -- Subpasta de RH
+('Relatorios', 'INATIVA', 6, 1),  -- Subpasta de Ideias
+('Propostas', 'ATIVA', 7, 1),  -- Subpasta de Pessoas
+('Contato', 'ATIVA', 8, 1),  -- Subpasta de Documentos
+('ImagensDiversas', 'ATIVA', 9, 1);  -- Subpasta de Imagens
+
+-- Inserindo Arquivos
+INSERT INTO Arquivos (ArquivoNome, ArquivoTipo, ArquivoTamanho, ArquivoCaminho, PastaIdSequencia, UsuarioIdSequencia) VALUES
+-- Arquivos dentro de Contratos
+('Berilo', 'pdf', 50000, '/arquivos/berilo.pdf', 2, 1),  
+('Imediato', 'docx', 10000, '/arquivos/imediato.docx', 2, 1),
+('ContratoModelo', 'pdf', 35000, '/arquivos/contratomodelo.pdf', 2, 1),  
+-- Arquivos dentro de Projetos
+('SenhasImportantes', 'txt', 2000, '/arquivos/senhasimportantes.txt', 3, 1),  
+('PostmanEmJava', 'java', 15000, '/arquivos/postmanemjava.java', 3, 1),
+('ProjetoX', 'doc', 6000, '/arquivos/projetox.doc', 3, 1),
+-- Arquivos dentro de Financeiro
+('ImpostosPagos', 'pdf', 30000, '/arquivos/impostospagos.pdf', 4, 1),
+('OrcamentoAnual', 'xlsx', 25000, '/arquivos/orcamentoanual.xlsx', 4, 1),  
+-- Arquivos dentro de RH
+('Curriculo', 'docx', 10000, '/arquivos/curriculo.docx', 5, 1),  
+('ContatoCliente', 'txt', 5000, '/arquivos/contatocliente.txt', 5, 1),
+('BeneficiosFuncionarios', 'pdf', 15000, '/arquivos/beneficiosfuncionarios.pdf', 5, 1),
+-- Arquivos dentro de Ideias
+('RelatorioAnual', 'xlsx', 20000, '/arquivos/relatorioanual.xlsx', 6, 1),  
+-- Arquivos dentro de Pessoas
+('PropostaCliente', 'pdf', 25000, '/arquivos/propostacliente.pdf', 7, 1),  
+-- Arquivos dentro de Documentos
+('DocumentacaoTecnica', 'pdf', 15000, '/arquivos/documentacaotecnica.pdf', 8, 1),  
+-- Arquivos dentro de Imagens
+('ImagemLogo', 'jpg', 10000, '/arquivos/imagemlogo.jpg', 9, 1),  
+('FotoEquipe', 'png', 12000, '/arquivos/fotoequipe.png', 9, 1),
+-- Arquivos adicionais
+('ApresentacaoCliente', 'ppt', 7000, '/arquivos/apresentacaocliente.ppt', 10, 1),
+('PlanilhaDeCustos', 'xls', 9000, '/arquivos/planilhadecustos.xls', 11, 1),
+('ProjetoNovo', 'java', 11000, '/arquivos/projetonovo.java', 12, 1);
