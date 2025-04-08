@@ -65,7 +65,19 @@
                 </div>
 
                 <div id="content">
-                    <!-- Aqui será carregado o conteúdo de outros arquivos -->
+
+                    <%
+                        String pagina = request.getParameter("pagina");
+
+                        if (pagina == null || pagina.isEmpty()) {
+                            pagina = "homeWelcome.jsp";
+                        } else {
+                            pagina = pagina + ".jsp";
+                        }
+                    %>
+
+                    <jsp:include page="<%= pagina %>" />
+
                 </div>
                 </main>
             </div>
