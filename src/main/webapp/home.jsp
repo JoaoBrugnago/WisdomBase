@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.wisdom.models.Usuario" %>
 
 <%
@@ -25,7 +26,7 @@
                 <nav class="home-nav">
                     <div class="home-menu">
                         <div class="home-itens-menu">
-                            <button class="home-subtitle">Opcao 1</button>
+                            <button class="home-subtitle">Opcão 1</button>
                             <ul class="home-dropdown">
                                 <li><a href="#">Saiba mais</a></li>
                                 <li><a href="#">Outros projetos</a></li>
@@ -34,14 +35,14 @@
                         </div>
 
                         <div class="home-itens-menu">
-                            <button class="home-subtitle">Opcao 2</button>
+                            <button class="home-subtitle">Opcão 2</button>
                             <ul class="home-dropdown">
                                 <li><a href="#">Sobre</a></li>
                             </ul>
                         </div>
 
                         <div class="home-itens-menu">
-                            <button class="home-subtitle">Opcao 3</button>
+                            <button class="home-subtitle">Opcão 3</button>
                             <ul class="home-dropdown">
                                 <li><a href="#">Contato</a></li>
                             </ul>
