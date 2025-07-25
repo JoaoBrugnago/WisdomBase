@@ -14,6 +14,7 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        request.setAttribute("pagina", "homeWelcome");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
         try {
             dispatcher.forward(request, response);

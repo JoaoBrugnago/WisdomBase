@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class EmailService {
 
-    private static final String USERNAME = "";
+    private static final String USERNAME = "joao.psb20@gmail.com";
     private static final String PASSWORD = "sfkt tewt plqq gtxb";
 
     public static void enviarEmail(String destinatario, String assunto, String mensagemTexto) throws MessagingException {

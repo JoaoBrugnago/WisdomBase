@@ -57,29 +57,29 @@
 
             <div class="home-container">
                 <aside class="home-sidebar">
-                <!-- A estrutura de árvore das pastas e arquivos serão carregados aqui -->
+                    <!-- A estrutura de árvore das pastas e arquivos serão carregados aqui -->
                 </aside>
 
                 <main class="home-content">
-                <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Pesquisar pastas e arquivos">
-                </div>
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Pesquisar pastas e arquivos">
+                    </div>
 
-                <div id="content">
+                    <div id="content">
 
-                    <%
-                        String pagina = request.getParameter("pagina");
+                        <%
+                            String pagina = request.getAttribute("pagina");
 
-                        if (pagina == null || pagina.isEmpty()) {
-                            pagina = "homeWelcome.jsp";
-                        } else {
-                            pagina = pagina + ".jsp";
-                        }
-                    %>
+                            if (pagina == null || pagina.isEmpty()) {
+                                pagina = "homeWelcome.jsp";
+                            } else {
+                                pagina = pagina + ".jsp";
+                            }
+                        %>
 
-                    <jsp:include page="<%= pagina %>" />
+                        <jsp:include page="<%= pagina %>" />
 
-                </div>
+                    </div>
                 </main>
             </div>
 
